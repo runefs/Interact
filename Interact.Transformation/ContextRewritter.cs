@@ -18,18 +18,24 @@ namespace Interact.Transformation
         {
         }
 
-        private BaseMethodDeclarationSyntax ThrowStaticMethodError()
+        private MethodDeclarationSyntax ThrowStaticMethodError()
         {
             throw new InvalidOperationException("Can't use static methods in a role");
         }
 
-        private SyntaxList<MemberDeclarationSyntax> AddMember(SyntaxList<MemberDeclarationSyntax> members, MemberDeclarationSyntax member)
+        private SyntaxList<MemberDeclarationSyntax> AddMemberWithTrivia(SyntaxList<MemberDeclarationSyntax> members, MemberDeclarationSyntax member, SyntaxTriviaList leadingTrivia)
         {
-            return members.Add(member);
+            return members.Add(member.WithLeadingTrivia(leadingTrivia));
         }
 
         public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
         {
+            var firstMember = node.Members.FirstOrDefault(n=>n.HasLeadingTrivia);
+            var memberTrivia = firstMember == null
+                               ? Syntax.TriviaList(Syntax.Whitespace("\t\t"))
+                               : firstMember.GetLeadingTrivia();
+            Func<SyntaxList<MemberDeclarationSyntax>, MemberDeclarationSyntax, SyntaxList<MemberDeclarationSyntax>> AddMember = 
+                (members, member) => AddMemberWithTrivia(members, member, memberTrivia);
             var roles = node.Members.OfType<ClassDeclarationSyntax>().Where(cls => IsRole(cls));
             if (roles.Any())
             {
@@ -62,8 +68,12 @@ namespace Interact.Transformation
                     let declRewriter = new RoleMethodDeclarationRewriter(roleName, rolesAndMethods)
                     let mth = m.Modifiers.Contains(Syntax.Token(SyntaxKind.StaticKeyword))
                                 ? ThrowStaticMethodError()
-                                : (MethodDeclarationSyntax)declRewriter.Visit(m)
-                    select (MethodDeclarationSyntax)roleMethodRewriter.Visit(mth)
+                                : ((MethodDeclarationSyntax)declRewriter.Visit(m))
+                    let openBrace = mth.Body.OpenBraceToken.WithLeadingTrivia(memberTrivia)
+                    let closeBrace = mth.Body.CloseBraceToken.WithLeadingTrivia(memberTrivia)
+                    let body = mth.Body.WithOpenBraceToken(openBrace).WithCloseBraceToken(closeBrace)
+                    let method = mth.WithBody(body)
+                    select (MethodDeclarationSyntax)roleMethodRewriter.Visit(method)
                     ).Aggregate(members, AddMember);
                 return node.WithMembers(members);
             }

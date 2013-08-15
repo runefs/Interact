@@ -90,7 +90,7 @@ namespace Interact.Transformation
             {
                 var fieldName = prefix + GetRoleName(expression);
 
-                expression = (SimpleNameSyntax)Syntax.IdentifierName(fieldName);
+                expression = (SimpleNameSyntax)Syntax.IdentifierName(fieldName).WithLeadingTrivia(expression.GetLeadingTrivia());
             }
             return expression;
         }
@@ -117,7 +117,7 @@ namespace Interact.Transformation
             if (IsRoleMethodInvocation(node))
             {
                 var methodName = ((SimpleNameSyntax)node.Name).Identifier.ValueText;
-                return Syntax.IdentifierName("self__" + GetRoleName(node.Expression) + "__" + methodName);
+                return Syntax.IdentifierName("self__" + GetRoleName(node.Expression) + "__" + methodName).WithLeadingTrivia(node.GetLeadingTrivia());
                 
             }
             return node;

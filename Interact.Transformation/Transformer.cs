@@ -73,6 +73,7 @@ namespace Interact.Transformation
             {
                 Directory.CreateDirectory(projectDir);
             }
+            
             projectPath = Path.Combine(projectDir, projectFileName);
             if (project.FilePath != null)
             {
@@ -88,7 +89,9 @@ namespace Interact.Transformation
                     Directory.CreateDirectory(directory);
                 }
                 var outputPath = Path.Combine(directory, fileName);
-
+                if(File.Exists(outputPath)){
+                    File.Delete(outputPath);
+                }
                 using (var writer = new System.IO.StreamWriter(File.OpenWrite(outputPath)))
                 {
                     doc.GetText().Write(writer);

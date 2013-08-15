@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextRewriter.cs" />
+    <Compile Include="ContextRewriterTest.cs" />
     <Compile Include="FrontLoader.cs" />
     <Compile Include="MoneyTransferTest.cs" />
     <Compile Include="InteractExecuter.cs" />

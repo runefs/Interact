@@ -17,7 +17,7 @@ namespace Interact.Examples.Test
         [TestMethod]
         public void TransformAccount()
         {
-            var transformer = new Transformer(@"..\Examples\MoneyTransfer\Account.cs");
+            var transformer = new Transformer(@"..\..\..\Examples\MoneyTransfer\Account.cs");
             var solution = transformer.GetSolution();
             solution = transformer.RewriteSolution(solution);
             transformer.WriteProjectToFile(solution.Projects.First());
