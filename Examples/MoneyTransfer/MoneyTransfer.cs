@@ -5,9 +5,11 @@ using System.Text;
 
 namespace Marvin.Examples
 {
-    public class MoneyTransfer
+    public class MoneyTransfer<TSource, TDestination>
+        where TSource : ICollection<LedgerEntry>
+        where TDestination : ICollection<LedgerEntry>
     {
-        public MoneyTransfer(Account source, Account destination, decimal amount)
+        public MoneyTransfer(Account<TSource> source, Account<TDestination> destination, decimal amount)
         {
             Source = source;
             Destination = destination;
@@ -15,31 +17,31 @@ namespace Marvin.Examples
         }
 
         [Role]
-        private class Source
+        private class Source : Account<TSource>
         {
             void Withdraw(decimal amount)
             {
-                Source.DecreaseBalance(amount);
+                this.DecreaseBalance(amount);
             }
             void Transfer(decimal amount)
             {
-                Console.WriteLine("Source balance is: " + Source.Balance);
+                Console.WriteLine("Source balance is: " + this.Balance);
                 Console.WriteLine("Destination balance is: " + Destination.Balance);
 
                 Destination.Deposit(amount);
-                Source.Withdraw(amount);
+                this.Withdraw(amount);
 
-                Console.WriteLine("Source balance is now: " + Source.Balance);
+                Console.WriteLine("Source balance is now: " + this.Balance);
                 Console.WriteLine("Destination balance is now: " + Destination.Balance);
             }
         }
 
         [Role]
-        private class Destination
+        private class Destination : Account<TDestination>
         {
             void Deposit(decimal amount)
             {
-                Destination.IncreaseBalance(amount);
+                this.IncreaseBalance(amount);
             }
         }
 

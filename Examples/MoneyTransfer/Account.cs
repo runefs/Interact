@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Marvin.Examples
 {
-    public class Account<T>
+    public class Account<T> where T : ICollection<LedgerEntry>
     {
-        public Account(ICollection<LedgerEntry> ledgers)
+        public Account(T ledgers)
         {
             Ledgers = ledgers;
         }

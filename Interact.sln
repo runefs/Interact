@@ -18,25 +18,32 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		MoneyTransfer|Any CPU = MoneyTransfer|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.MoneyTransfer|Any CPU.ActiveCfg = MoneyTransfer|Any CPU
 		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.MoneyTransfer|Any CPU.ActiveCfg = MoneyTransfer|Any CPU
 		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.MoneyTransfer|Any CPU.ActiveCfg = MoneyTransfer|Any CPU
+		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.MoneyTransfer|Any CPU.Build.0 = MoneyTransfer|Any CPU
 		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.MoneyTransfer|Any CPU.ActiveCfg = MoneyTransfer|Any CPU
 		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1FCBDCD3-01F2-41F0-B56C-3D8389E15C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FCBDCD3-01F2-41F0-B56C-3D8389E15C4A}.MoneyTransfer|Any CPU.ActiveCfg = MoneyTransfer|Any CPU
 		{1FCBDCD3-01F2-41F0-B56C-3D8389E15C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FCBDCD3-01F2-41F0-B56C-3D8389E15C4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
