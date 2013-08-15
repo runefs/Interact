@@ -57,6 +57,15 @@ namespace Interact
         {
             foreach (var project in solution.Projects)
             {
+                var projectDir = Path.Combine(Path.GetDirectoryName(project.FilePath),"output");
+                var projectFileName = Path.GetFileName(project.FilePath);
+                if (!Directory.Exists(projectDir))
+                {
+                   Directory.CreateDirectory(projectDir);
+                }
+                var projectPath = Path.Combine(projectDir, projectFileName);
+                File.Copy(project.FilePath,projectPath);
+
                 foreach (var doc in project.Documents)
                 {
                     var fileName = Path.GetFileName(doc.FilePath);
