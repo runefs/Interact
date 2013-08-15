@@ -9,16 +9,17 @@ namespace Interact.Examples.Test
     public static class Interact
     {
 
-        public static string Execute(string solutionOrProjectPath)
+        public static string Execute(string solutionOrProjectPath, string arguments=null)
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = "Interact.exe";
-            startInfo.Arguments = solutionOrProjectPath;
+            startInfo.Arguments = solutionOrProjectPath + " " + string.Join(" ", arguments);
+            startInfo.RedirectStandardOutput = true;
             process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
             process.Start();
-            process.WaitForExit();
             return process.StandardOutput.ReadToEnd();
         }
     }

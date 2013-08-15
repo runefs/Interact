@@ -14,7 +14,9 @@ namespace Interact.Examples.Test
         [TestMethod]
         public void ExecuteMoneyTransfer()
         {
-
+            //Silly test that just shows nothing was reported
+            var res = Interact.Execute(@"..\..\..\Examples\MoneyTransfer\MoneyTransfer.csproj");
+            Assert.AreEqual("", res);
         }
     }
 }

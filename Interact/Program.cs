@@ -19,7 +19,12 @@ namespace Interact
         private static void Main(string[] args)
         {
             var solutionPath = Path.GetFullPath(args.Any() ? args[0] : @"..\..\..\Examples\MoneyTransfer\Moneytransfer.csproj");
-            
+            if (!File.Exists(solutionPath))
+            {
+                Console.WriteLine("File not found (" + solutionPath +")");
+                return;
+            }
+
             var workspace = string.Compare(Path.GetExtension(solutionPath), ".sln", true) == 0
                             ? Workspace.LoadSolution(solutionPath)
                             : Workspace.LoadStandAloneProject(solutionPath);
@@ -43,25 +48,31 @@ namespace Interact
             }
             else
             {
-                foreach (var project in solution.Projects)
-                {
-                    foreach (var doc in project.Documents)
-                    {
-                        var fileName = Path.GetFileName(doc.FilePath);
-                        var directory = Path.Combine(Path.GetDirectoryName(doc.FilePath),"output");
-                        if(!Directory.Exists(directory)){
-                            Directory.CreateDirectory(directory);
-                        }
-                        var outputPath = Path.Combine(directory,fileName);
+                TransforFiles(solution);
+            }
 
-                        using (var writer = new System.IO.StreamWriter(File.OpenWrite(outputPath)))
-                        {
-                            doc.GetText().Write(writer);
-                        }
+        }
+
+        private static void TransforFiles(ISolution solution)
+        {
+            foreach (var project in solution.Projects)
+            {
+                foreach (var doc in project.Documents)
+                {
+                    var fileName = Path.GetFileName(doc.FilePath);
+                    var directory = Path.Combine(Path.GetDirectoryName(doc.FilePath), "output");
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+                    var outputPath = Path.Combine(directory, fileName);
+
+                    using (var writer = new System.IO.StreamWriter(File.OpenWrite(outputPath)))
+                    {
+                        doc.GetText().Write(writer);
                     }
                 }
             }
-
         }
 
         private static void Compile(ISolution solution)
