@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interact", "Interact\Interact.csproj", "{4D086E95-53F8-483B-8B18-C8EE1238E87F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interact.Transformation", "Interact.Transformation\Interact.Transformation.csproj", "{8724F2FB-011E-440F-8F7D-67ADA87823BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{76044639-5DC3-4C09-8F90-7CC529FD8BC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyTransfer", "Examples\MoneyTransfer\MoneyTransfer.csproj", "{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A8638F1E-9784-4B3A-BB85-3D71D0A01ACA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interact.Examples.Test", "Interact.Examples.Test\Interact.Examples.Test.csproj", "{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D086E95-53F8-483B-8B18-C8EE1238E87F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8724F2FB-011E-440F-8F7D-67ADA87823BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{296BAFBF-5B09-43FB-BB37-C7DEAFA66388} = {76044639-5DC3-4C09-8F90-7CC529FD8BC8}
+		{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D} = {A8638F1E-9784-4B3A-BB85-3D71D0A01ACA}
+	EndGlobalSection
+EndGlobal
