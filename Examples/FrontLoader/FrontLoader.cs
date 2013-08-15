@@ -8,6 +8,7 @@ namespace Marvin.Examples.FrontLoader
             allActivities = activities;
         }
 
+        
         [Role]
         private class allActivities{
             void Plan(){

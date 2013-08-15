@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interact.Examples.Test
 {
-    public static class Interact
+    public static class InteractExecuter
     {
 
         public static string Execute(string solutionOrProjectPath, string arguments=null)

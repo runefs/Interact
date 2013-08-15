@@ -46,11 +46,12 @@ namespace Interact.Transformation
                 var generalRewriter = new MethodBodyRewriter(rolesAndMethods, null);
                 members = (from r in roles
                            let roleName = r.Identifier.ValueText
-                           let field = Syntax.FieldDeclaration(
-                                               Syntax.VariableDeclaration(
-                                                       Syntax.IdentifierName(" dynamic ")))
+                           let fieldType = r.BaseList != null
+                                           ? r.BaseList.Types.Single().WithTrailingTrivia(Syntax.Whitespace(" ")).WithLeadingTrivia(Syntax.Whitespace(" "))
+                                           : Syntax.IdentifierName(" dynamic ")
+                           let field = Syntax.FieldDeclaration(Syntax.VariableDeclaration(fieldType))
                                            .WithModifiers(Syntax.Token(SyntaxKind.PrivateKeyword))
-                                           .AddDeclarationVariables(Syntax.VariableDeclarator("role____" + roleName))
+                                           .AddDeclarationVariables(Syntax.VariableDeclarator("role____" + roleName)).WithTrailingTrivia(Syntax.Whitespace("\r\n"))
                            select field).Aggregate(members, AddMember);
 
                 members = (

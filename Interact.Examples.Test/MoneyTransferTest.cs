@@ -15,7 +15,7 @@ namespace Interact.Examples.Test
         public void ExecuteMoneyTransfer()
         {
             //Silly test that just shows nothing was reported
-            var res = Interact.Execute(@"..\..\..\Examples\MoneyTransfer\MoneyTransfer.csproj");
+            var res = InteractExecuter.Execute(@"..\..\..\Examples\MoneyTransfer\MoneyTransfer.csproj");
             Assert.AreEqual("", res);
         }
     }

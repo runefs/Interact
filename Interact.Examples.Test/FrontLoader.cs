@@ -15,7 +15,7 @@ namespace Interact.Examples.Test
         public void ExecuteFrontLoaderTest()
         {
             //Silly test that just shows nothing was reported
-            var res = Interact.Execute(@"..\..\..\Examples\FrontLoader\FrontLoader.csproj");
+            var res = InteractExecuter.Execute(@"..\..\..\Examples\FrontLoader\FrontLoader.csproj");
             Assert.AreEqual("", res);
         }
     }

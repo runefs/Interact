@@ -5,14 +5,15 @@ using System.Text;
 
 namespace Marvin.Examples
 {
-    public class Account
+    public class Account<T>
     {
         public Account(ICollection<LedgerEntry> ledgers)
         {
             Ledgers = ledgers;
         }
+
         [Role]
-        private class Ledgers
+        private class Ledgers : T
         {
             decimal GetBalance()
             {

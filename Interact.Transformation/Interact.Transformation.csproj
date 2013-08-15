@@ -44,6 +44,7 @@
     <Compile Include="MethodBodyRewriter.cs" />
     <Compile Include="MethodRewritter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
