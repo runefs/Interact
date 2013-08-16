@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Marvin.Examples
 {
+    [Context]
     public class MoneyTransfer<TSource, TDestination>
         where TSource : ICollection<LedgerEntry>
         where TDestination : ICollection<LedgerEntry>

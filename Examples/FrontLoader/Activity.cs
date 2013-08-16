@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Marvin.Examples.FrontLoader
 {
+    [Context]
    internal class Activity{
        
        public Activity(string name, int Duration, DateTime earlyStartDate, IEnumerable<Activity> Predecessors){

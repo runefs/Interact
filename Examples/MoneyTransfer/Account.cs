@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Marvin.Examples
 {
+    [Context]
     public class Account<T> where T : ICollection<LedgerEntry>
     {
         public Account(T ledgers)

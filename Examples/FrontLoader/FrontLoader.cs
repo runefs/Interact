@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace Marvin.Examples.FrontLoader
 {
+    [Context]
     internal class FrontLoader{
         public FrontLoader(IEnumerable<Activity> activities){
             allActivities = activities;
