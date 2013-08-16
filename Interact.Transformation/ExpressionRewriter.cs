@@ -11,15 +11,24 @@ namespace Interact.Transformation
     {
         private string prefix { get { 
             return "role____"; } }
-        public ExpressionRewriter(Dictionary<string, HashSet<string>> roles, string roleName, bool isRoleMethod)
+        public ExpressionRewriter(Dictionary<string, HashSet<string>> roles) : this(roles,null)
+        {
+        }
+
+        private ExpressionRewriter(Dictionary<string, HashSet<string>> roles, string roleName = null)
         {
             if (_roleName != null && !roles.ContainsKey(_roleName)) throw new ArgumentException("roleName is not a known role");
 
             this.roles = roles;
             this._roleName = roleName;
-            this.IsRoleMethod = isRoleMethod;
+            this.IsRoleMethod = !string.IsNullOrWhiteSpace(roleName);
         }
 
+        public ExpressionRewriter WithRoleName(string roleName)
+        {
+            if (string.IsNullOrWhiteSpace(roleName)) throw new ArgumentNullException("roleName");
+            return new ExpressionRewriter(roles, roleName);
+        }
         private readonly Dictionary<string, HashSet<string>> roles;
         private readonly string _roleName;
         
@@ -75,14 +84,6 @@ namespace Interact.Transformation
             return RewriteRoleExpression(node);
         }
 
-        public override SyntaxNode VisitBinaryExpression(BinaryExpressionSyntax node)
-        {
-            var left = (ExpressionSyntax)Visit(node.Left);
-            var right = (ExpressionSyntax)Visit(node.Right);
-            return node.WithLeft(left)
-                       .WithRight(right);
-        }
-
         private ExpressionSyntax RewriteRoleExpression(ExpressionSyntax expression)
         {
             var isRole = IsRole(expression);
@@ -123,6 +124,19 @@ namespace Interact.Transformation
             return node;
         }
 
+        public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            if (IsRoleMethod)
+            {
+                var methodName = node.Identifier.ValueText;
+                var methodIdentifier = Syntax.Identifier(" self__" + _roleName + "__" + methodName);
+
+                node = (MethodDeclarationSyntax)node.WithIdentifier(methodIdentifier);
+            }
+            return base.VisitMethodDeclaration(node);
+
+        }
+
         public override SyntaxNode VisitInvocationExpression(InvocationExpressionSyntax node)
         {
             var memAccess = node.Expression as MemberAccessExpressionSyntax;
@@ -138,7 +152,7 @@ namespace Interact.Transformation
                     node = node.ReplaceNode(node.Expression, expression);
                 }
             }
-            return node;
+            return base.VisitInvocationExpression(node);
         }       
     }
 }

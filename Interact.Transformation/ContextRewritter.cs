@@ -43,13 +43,13 @@ namespace Interact.Transformation
                                        ro => ro.Identifier.ValueText,
                                        ro => new HashSet<string>(ro.Members.OfType<MethodDeclarationSyntax>()
                                                                 .Select(m => m.Identifier.ValueText)));
-                var methodBodyRewriter = new MethodBodyRewriter(rolesAndMethods, null);
+                var generalRewriter = new ExpressionRewriter(rolesAndMethods);
                 var members = (from m in node.Members
                                let cls = m as ClassDeclarationSyntax
                                where !IsRole(cls)
-                               select (MemberDeclarationSyntax)methodBodyRewriter.Visit(m)).Aggregate(new SyntaxList<MemberDeclarationSyntax>(), AddMember);
+                               select (MemberDeclarationSyntax)generalRewriter.Visit(m)).Aggregate(new SyntaxList<MemberDeclarationSyntax>(), AddMember);
 
-                var generalRewriter = new MethodBodyRewriter(rolesAndMethods, null);
+                
                 members = (from r in roles
                            let roleName = r.Identifier.ValueText
                            let fieldType = r.BaseList != null
@@ -64,18 +64,18 @@ namespace Interact.Transformation
                     from r in roles
                     let roleName = r.Identifier.ValueText
                     from m in r.Members.OfType<MethodDeclarationSyntax>()
-                    let roleMethodRewriter = new MethodBodyRewriter(rolesAndMethods, roleName)
-                    let declRewriter = new RoleMethodDeclarationRewriter(roleName, rolesAndMethods)
+                    let roleMethodRewriter = generalRewriter.WithRoleName(roleName)
+                    
                     let mth = m.Modifiers.Contains(Syntax.Token(SyntaxKind.StaticKeyword))
                                 ? ThrowStaticMethodError()
-                                : ((MethodDeclarationSyntax)declRewriter.Visit(m))
+                                : ((MethodDeclarationSyntax)roleMethodRewriter.Visit(m))
                     let openBrace = mth.Body.OpenBraceToken.WithLeadingTrivia(memberTrivia)
                     let closeBrace = mth.Body.CloseBraceToken.WithLeadingTrivia(memberTrivia)
                     let body = mth.Body.WithOpenBraceToken(openBrace).WithCloseBraceToken(closeBrace)
                     let method = mth.WithBody(body)
-                    select (MethodDeclarationSyntax)roleMethodRewriter.Visit(method)
+                    select method
                     ).Aggregate(members, AddMember);
-                return node.WithMembers(members);
+                node = node.WithMembers(members);
             }
             return base.VisitClassDeclaration(node);
         }

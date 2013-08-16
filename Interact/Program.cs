@@ -21,9 +21,8 @@ namespace Interact
 
             var shouldCompile = args.Any(a => string.Compare("/c", a, true) == 0);
             var solutionPath = Path.GetFullPath(args.Any() ? args[0] : @"..\..\..\Examples\MoneyTransfer\Moneytransfer.csproj");
-            var transformer = new Transformer(solutionPath);
-            var solution = transformer.GetSolution();
-            solution = transformer.RewriteSolution(solution);
+            var solution = Interact.Transformation.WorkspaceExtensions.GetSolution(solutionPath);
+            solution = solution.Rewrite();
             if (shouldCompile)
             {
                 Compile(solution);
@@ -32,7 +31,7 @@ namespace Interact
             {
                 foreach (var project in solution.Projects)
                 {
-                    transformer.WriteProjectToFile(project);
+                    project.WriteToFile();
                 }
             }
         }

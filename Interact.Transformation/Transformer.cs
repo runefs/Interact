@@ -7,33 +7,62 @@ using Roslyn.Services;
 using Roslyn.Compilers;
 using Roslyn.Compilers.CSharp;
 using System.IO;
+using System.Threading;
+
+
 
 namespace Interact.Transformation
 {
-   public class Transformer
+    public static class WorkspaceExtensions
     {
-       private readonly string _solutionPath;
-       public Transformer(string solutionPath)
-       {
-           _solutionPath = Path.GetFullPath(solutionPath);
-       }
+        private static readonly ContextRewriter contextRewriter = new ContextRewriter();
 
-        public ISolution RewriteSolution(ISolution solution)
+        public static ISolution Rewrite(this ISolution solution)
         {
-            var contextRewriter = new ContextRewriter();
-
-            foreach (var project in solution.Projects)
+            Parallel.ForEach(solution.Projects.SelectMany(p => p.Documents), doc =>
             {
-                foreach (var doc in project.Documents)
-                {
-                    var newDoc = doc.UpdateSyntaxRoot(contextRewriter.Visit((SyntaxNode)doc.GetSyntaxTree().GetRoot()));
-                    solution = solution.UpdateDocument(newDoc);
-                }
-            }
+                var newDoc = doc.UpdateSyntaxRoot(contextRewriter.Visit((SyntaxNode)doc.GetSyntaxTree().GetRoot()));
+                solution = solution.UpdateDocument(newDoc);
+            });
             return solution;
         }
 
-        public ISolution GetSolution()
+        public static void WriteToFile(this IProject project, string outputDir="output")
+        {
+            var projectPath = project.FilePath != null ? project.FilePath : "temp.csproj";
+            var projectDir = Path.Combine(Path.GetDirectoryName(projectPath), outputDir);
+            var projectFileName = Path.GetFileName(projectPath);
+            if (!Directory.Exists(projectDir))
+            {
+                Directory.CreateDirectory(projectDir);
+            }
+
+            projectPath = Path.Combine(projectDir, projectFileName);
+            if (project.FilePath != null)
+            {
+                File.Copy(project.FilePath, projectPath, true);
+            }
+            Parallel.ForEach(project.Documents, doc =>
+            {
+                var directory = Path.Combine(Path.GetDirectoryName(doc.FilePath), outputDir);
+                var fileName = Path.GetFileName(doc.FilePath);
+
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                var outputPath = Path.Combine(directory, fileName);
+                if (File.Exists(outputPath))
+                {
+                    File.Delete(outputPath);
+                }
+                using (var writer = new System.IO.StreamWriter(File.OpenWrite(outputPath)))
+                {
+                    doc.GetText().Write(writer);
+                }
+            });
+        }
+        public static ISolution GetSolution(string _solutionPath)
         {
             if (!File.Exists(_solutionPath))
             {
@@ -62,41 +91,6 @@ namespace Interact.Transformation
 
             var solution = workspace.CurrentSolution;
             return solution;
-        }
-
-        public void WriteProjectToFile(IProject project, string outputDir="output")
-        {
-            var projectPath = project.FilePath != null ? project.FilePath : Path.GetFileNameWithoutExtension(_solutionPath) + ".csproj";
-            var projectDir = Path.Combine(Path.GetDirectoryName(projectPath), outputDir);
-            var projectFileName = Path.GetFileName(projectPath);
-            if (!Directory.Exists(projectDir))
-            {
-                Directory.CreateDirectory(projectDir);
-            }
-            
-            projectPath = Path.Combine(projectDir, projectFileName);
-            if (project.FilePath != null)
-            {
-                File.Copy(project.FilePath, projectPath,true);
-            }
-            foreach (var doc in project.Documents)
-            {
-                var directory = Path.Combine(Path.GetDirectoryName(doc.FilePath), outputDir);
-                var fileName = Path.GetFileName(doc.FilePath);
-
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                var outputPath = Path.Combine(directory, fileName);
-                if(File.Exists(outputPath)){
-                    File.Delete(outputPath);
-                }
-                using (var writer = new System.IO.StreamWriter(File.OpenWrite(outputPath)))
-                {
-                    doc.GetText().Write(writer);
-                }
-            }
         }
     }
 }

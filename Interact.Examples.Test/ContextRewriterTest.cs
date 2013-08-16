@@ -14,13 +14,12 @@ namespace Interact.Examples.Test
     [TestClass]
     public class ContextRewriterTest
     {
-        [TestMethod]
+        [TestMethod] //Not really a test just executing stuff
         public void TransformAccount()
         {
-            var transformer = new Transformer(@"..\..\..\Examples\MoneyTransfer\Account.cs");
-            var solution = transformer.GetSolution();
-            solution = transformer.RewriteSolution(solution);
-            transformer.WriteProjectToFile(solution.Projects.First());
+            var solution = Interact.Transformation.WorkspaceExtensions.GetSolution(@"..\..\..\Examples\MoneyTransfer\Account.cs");
+            solution = solution.Rewrite();
+            solution.Projects.First().WriteToFile();
         }
 
     }
