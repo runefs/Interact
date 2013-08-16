@@ -7,8 +7,8 @@
     <ProjectGuid>{7B3B4FFB-1F2C-4EA9-959E-D56EF938B04D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Interact.Examples.Test</RootNamespace>
-    <AssemblyName>Interact.Examples.Test</AssemblyName>
+    <RootNamespace>Interact.Test</RootNamespace>
+    <AssemblyName>Interact.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

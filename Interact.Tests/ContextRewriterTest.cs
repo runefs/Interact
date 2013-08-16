@@ -9,7 +9,7 @@ using Roslyn.Compilers;
 using Roslyn.Compilers.CSharp;
 using System.IO;
 
-namespace Interact.Examples.Test
+namespace Interact.Test
 {
     [TestClass]
     public class ContextRewriterTest

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interact.Examples.Test
+namespace Interact.Test
 {
     public static class InteractExecuter
     {

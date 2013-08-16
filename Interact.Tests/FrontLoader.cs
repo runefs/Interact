@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Interact.Examples.Test
+namespace Interact.Test
 {
     [TestClass]
     public class FrontLoaderTest
